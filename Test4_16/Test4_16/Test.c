@@ -8,7 +8,7 @@ void main()
 	scanf("%d", &n);
 	//int ar[20];     //n 决定下来  //10  30
 
-	int *ar = (int*)malloc(sizeof(int) * n);
+	int *ar = (int*)malloc(sizeof(int) * n);  //
 	for(int i=1; i<=n; ++i)
 		ar[i-1] = i;
 
@@ -16,7 +16,7 @@ void main()
 		printf("%d ", ar[i]);
 	printf("\n");
 
-	free(ar);
+	free(ar);  //
 }
 
 /*
