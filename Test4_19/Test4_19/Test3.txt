@@ -1,0 +1,182 @@
+#include<stdio.h>
+
+int main()
+{
+	FILE *fpIn = fopen("Test.c", "r");
+	if(NULL == fpIn)
+	{
+		printf("Open Test.c Error.\n");
+		return -1;
+	}
+	FILE *fpOut = fopen("Test3.txt", "w");
+	if(NULL == fpOut)
+	{
+		fclose(fpIn);
+		printf("Open Test3.txt Error.\n");
+		return -1;
+	}
+
+	//Copy
+	char buf[128] = {0};
+	char *res = fgets(buf, 128, fpIn);
+	while(res != NULL)
+	{
+		fputs(buf, fpOut);
+		memset(buf, 0, 128);
+		res = fgets(buf, 128, fpIn);
+	}
+
+	fclose(fpIn);
+	fclose(fpOut);
+	return 0;
+}
+
+/*
+int main()
+{
+	FILE *fpIn = fopen("Test.c", "r");
+	if(NULL == fpIn)
+	{
+		printf("Open Test.c Error.\n");
+		return -1;
+	}
+	FILE *fpOut = fopen("Test2.txt", "w");
+	if(NULL == fpOut)
+	{
+		fclose(fpIn);
+		printf("Open Test2.txt Error.\n");
+		return -1;
+	}
+
+	//Copy
+	char ch = fgetc(fpIn);
+	while(ch != EOF)
+	{
+		fputc(ch, fpOut);
+		ch = fgetc(fpIn);
+	}
+
+	fclose(fpIn);
+	fclose(fpOut);
+	return 0;
+}
+
+/*
+void main()
+{
+	int ar[10] = {0};
+
+	FILE *fp = fopen("Test1.txt", "rb");  
+	if(NULL == fp)
+	{
+		printf("Open File Failed.\n");
+		return;
+	}
+
+	fread(ar, sizeof(int), 10, fp);
+
+	fclose(fp);
+}
+
+/*
+void main()
+{
+	int ar[] = {12,23,34,45,56,67,78,89,90,100};
+	int n = sizeof(ar) / sizeof(ar[0]);
+
+	FILE *fp = fopen("Test1.txt", "wb");  
+	if(NULL == fp)
+	{
+		printf("Open File Failed.\n");
+		return;
+	}
+
+	fwrite(ar, sizeof(int), n, fp);
+
+	fclose(fp);
+}
+
+/*
+void main()
+{
+	int ar[] = {12,23,34,45,56,67,78,89,90,100};
+	int n = sizeof(ar) / sizeof(ar[0]);
+
+	FILE *fp = fopen("Test.txt", "a");
+	if(NULL == fp)
+	{
+		printf("Open File Failed.\n");
+		return;
+	}
+
+	for(int i=0; i<n; ++i)
+		fprintf(fp, "%d ", ar[i]); //重定向
+
+	fclose(fp);
+}
+
+/*
+void main()
+{
+	int ar[10] = {0};
+	FILE *fp = fopen("Test.txt", "r");
+	if(NULL == fp)
+	{
+		printf("Open File Failed.\n");
+		return;
+	}
+
+	for(int i=0; i<10; ++i)
+	{
+		//scanf("%d", &ar[i]); //标准输入 键盘
+		fscanf(fp, "%d", &ar[i]);
+	}
+
+	fclose(fp);
+}
+
+/*
+void main()
+{
+	int ar[] = {12,23,34,45,56,67,78,89,90,100};
+	int n = sizeof(ar) / sizeof(ar[0]);
+
+	FILE *fp = fopen("Test.txt", "w");
+	if(NULL == fp)
+	{
+		printf("Open File Failed.\n");
+		return;
+	}
+
+	for(int i=0; i<n; ++i)
+		fprintf(fp, "%d ", ar[i]); //重定向
+
+	fclose(fp);
+}
+
+/*
+void main()
+{
+	int ar[] = {12,23,34,45,56,67,78,89,90,100};
+	int n = sizeof(ar) / sizeof(ar[0]);
+
+	FILE *fp = NULL; //文件
+	fp = fopen("Test.txt", "w");
+	//fp = fopen("C:\\Bit\\Test.txt", "w");
+	//fp = fopen("..\Test.txt", "w");
+	if(NULL == fp)
+	{
+		printf("Open File Failed.\n");
+		return;
+	}
+
+	for(int i=0; i<n; ++i)
+	{
+		//printf("%d ", ar[i]);    //标准输出 -> 屏幕  
+		fprintf(fp, "%d ", ar[i]); //重定向
+	}
+	//printf("\n");
+
+	fclose(fp);
+}
+*/
