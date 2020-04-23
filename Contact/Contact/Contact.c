@@ -242,20 +242,18 @@ void LoadContact(Contact *pct)
 	FILE *fp = fopen("contact.dat", "r");
 	assert(fp != NULL);
 
-	//char buffer[256] = {0};
-	//fgets(buffer, 256, fp);
-	int i = 0;
-	while(feof(fp) != EOF)
+	while(!feof(fp))
 	{
-		fscanf(fp, "%s %s %d %s %s", pct->data[i].name, 
-									 pct->data[i].sex,
-									 &(pct->data[i].age),
-									 pct->data[i].tel,
-									 pct->data[i].addr);
-		i++;
+		CheckCapacity(pct);
+		int res = fscanf(fp, "%s %s %d %s %s", pct->data[pct->size].name, 
+									 pct->data[pct->size].sex,
+									 &(pct->data[pct->size].age),
+									 pct->data[pct->size].tel,
+									 pct->data[pct->size].addr);
+		if(res == EOF) //达到了文件末尾
+			break;
+		pct->size++;
 	}
-
-	pct->size = i;
 
 	fclose(fp);
 	printf("加载通讯录成功.....\n");
