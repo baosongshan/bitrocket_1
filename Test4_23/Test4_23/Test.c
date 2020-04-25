@@ -2,10 +2,216 @@
 #include<assert.h>
 #include<stdlib.h>
 #include<stdbool.h>
+#include<string.h>
 
+int FindChar(char *str, char ch)
+{
+    //assert(str != NULL);
+    int count = 0;
+    while(*str != '\0')
+    {
+        if(*str == ch)
+            count++;
+        str++;
+    }
+    return count;
+}
+
+int main()
+{
+    char str[100] = {0}; //Abcabc
+    gets(str);
+    char ch;    //A
+    scanf("%c", &ch);
+    
+    int count = FindChar(str, ch);
+    printf("%d", count);
+    
+    return 0;
+}
+
+/*
+void main()
+{
+	char str[100] = {0}
+	//scanf("%s", str);   //' ',  \n  hello bit
+	gets(str);
+	printf("str = %s\n", str);
+}
+
+/*
+void main()
+{
+	char str[100] = {0};
+	scanf("%s", str);   //' ',  \n  hello bit
+	printf("str = %s\n", str);
+
+	scanf("%s", str);   //' ',  \n  hello bit
+	printf("str = %s\n", str);
+}
+
+/*
+bool IsRotate(char *str, char *sub)
+{
+	assert(str!=NULL &&sub!=NULL);
+	if(strlen(str) != strlen(sub))
+		return false;
+	char *tmp = (char *)malloc(sizeof(char) * strlen(str)*2+1);
+	strcpy(tmp, str);
+	strcat(tmp, str);
+	char *res = strstr(tmp, sub);
+	free(tmp);
+	return (res != NULL);
+}
+
+void main()
+{
+	char *str = "HelloBit";
+	char *sub = "BtiHello";
+
+	bool flag = IsRotate(str, sub);
+	if(flag)
+		printf("True");
+	else
+		printf("False");
+}
+
+/*
+//字符串
+
+void Reverse(char *str, int start, int end) //[ ]
+{
+	assert(str != NULL);
+	while(start < end)
+	{
+		char tmp = str[start];
+		str[start] = str[end];
+		str[end] = tmp;
+		start++;
+		end--;
+	}
+}
+
+void LeftRound(char *str, int n)
+{
+	//1 验证参数的合法性
+	assert(str != NULL);
+	//2 移动的步长
+	int len = strlen(str);
+	if(len == 1)
+		return;
+	int step = n % len;
+
+	//3 移动
+	Reverse(str, 0, step-1);
+	Reverse(str, step, len-1);
+	Reverse(str, 0, len-1);
+}
+
+void main()
+{
+	char str[] = "ABCDEFGHIJK";
+	int n = 2; //"CDEFGHIJKAB";
+	LeftRound(str, n);
+	printf("str = %s\n", str);
+}
+
+/*
+void LeftRound(char *str, int n)
+{
+	//1 验证参数的合法性
+	assert(str != NULL);
+	//2 移动的步长
+	int len = strlen(str);
+	if(len == 1)
+		return;
+	int step = n % len;
+
+	//3 移动
+	char *tmp = (char*)malloc(sizeof(char) * len +1);
+	memset(tmp, 0, sizeof(char)*len);
+	strncpy(tmp, str+step, len-step);
+	strncat(tmp, str, step);  // \0
+	strncpy(str, tmp, len);
+	free(tmp);
+}
+
+void main()
+{
+	char str[] = "ABCDEFGHIJK";
+	int n = 2; //"CDEFGHIJKAB";
+	LeftRound(str, n);
+	printf("str = %s\n", str);
+}
+
+/*
+void LeftRound(char *str, int n)
+{
+	//1 验证参数的合法性
+	assert(str != NULL);
+	//2 移动的步长
+	int len = strlen(str);
+	if(len == 1)
+		return;
+	int step = n % len;
+
+	//3 移动
+	while(step-- != 0)
+	{
+		char tmp = str[0];
+		for(int i=0; i<len-1; ++i)
+			str[i] = str[i+1];
+		str[len-1] = tmp;
+	}
+}
+
+void main()
+{
+	char str[] = "A";
+	int n = 20; //"CDEFGHIJKAB";
+	LeftRound(str, n);
+	printf("str = %s\n", str);
+}
+
+/*
 #define ROW  5
 #define COL  5
 
+bool FindNum(int ar[ROW][COL], int key)
+{
+	int r = 0;
+	int c = COL-1;
+	while(r<ROW && c>=0)
+	{
+		if(key < ar[r][c])
+			c--;
+		else if(key > ar[r][c])
+			r++;
+		else
+			return true;
+	}
+	return false;
+}
+
+void main()
+{
+	int ar[ROW][COL] = {
+						{1,  3,  5,  7,  9},
+						{2,  4,  6,  8,  10},
+						{11, 13, 15, 17, 19},
+						{21, 23, 25, 27 ,29},
+						{31, 33, 35, 37, 39}
+					    };
+
+	int key = 38;
+	bool flag = FindNum(ar, key);
+	if(flag)
+		printf("key %d found.\n", key);
+	else
+		printf("key %d not found.\n", key);
+}
+
+/*
 bool FindNum(int ar[ROW][COL], int key)
 {
 	//O(N^2)
