@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
+    <ClInclude Include="list.h" />
     <ClInclude Include="seqlist.h" />
   </ItemGroup>
   <ItemGroup>
