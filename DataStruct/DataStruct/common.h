@@ -4,6 +4,7 @@
 #include<stdio.h>
 #include<assert.h>
 #include<stdbool.h>
+#include<vld.h>
 
 #define ElemType int
 
