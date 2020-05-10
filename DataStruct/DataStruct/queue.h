@@ -166,6 +166,9 @@ void CircleQueuePrint(CircleQueue *psq)
 ///////////////////////////////////////////////////////////////
 //а╢й╫╤сап
 
+
+//#undef ElemType
+
 typedef struct LinkQueueNode
 {
 	ElemType data;
@@ -182,6 +185,8 @@ void LinkQueueInit(LinkQueue *pq);
 void LinkQueueEnQue(LinkQueue *pq, ElemType x);
 void LinkQueueDeQue(LinkQueue *pq);
 void LinkQueuePrint(LinkQueue *pq);
+bool LinkQueueEmpty(LinkQueue *pq);
+ElemType LinkQueueFront(LinkQueue *pq);
 
 void LinkQueueInit(LinkQueue *pq)
 {
@@ -225,6 +230,17 @@ void LinkQueuePrint(LinkQueue *pq)
 		p = p->link;
 	}
 	printf("\n");
+}
+
+bool LinkQueueEmpty(LinkQueue *pq)
+{
+	return pq->front == NULL;
+}
+
+ElemTypeLinkQueueFront(LinkQueue *pq)
+{
+	assert(pq->front != NULL);
+	return pq->front->data;
 }
 
 #endif /* _QUEUE_H_ */

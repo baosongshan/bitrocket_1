@@ -1,8 +1,39 @@
 #include"seqlist.h"
 #include"list.h"
 #include"stack.h"
-#include"queue.h"
+//#include"queue.h"
+#include"tree.h"
 
+//ABC##DE##F##g#H##
+
+void main()
+{
+	//const char *str = "AB#DF###CE###";
+	const char *str = "ABC##DE##F##G#H##";
+	BinTree  bt;
+	BinTreeInit(&bt);
+	BinTreeCreate(&bt);
+	printf("VLR: ");
+	PreOrder(&bt);
+	printf("\n");
+
+	printf("LVR: ");
+	InOrder(&bt);
+	printf("\n");
+
+	printf("LRV: ");
+	PostOrder(&bt);
+	printf("\n");
+
+	printf("Level: ");
+	LevelOrder(&bt);
+	printf("\n");
+
+	printf("Size = %d\n", BinTreeCount(&bt));
+	printf("Height = %d\n", BinTreeHeight(&bt));
+}
+
+/*
 void main()
 {
 	LinkQueue Q;
