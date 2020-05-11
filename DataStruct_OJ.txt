@@ -823,3 +823,333 @@ void myCircularQueueFree(MyCircularQueue* obj)
  
  * myCircularQueueFree(obj);
 */
+
+
+================================================================================================
+Lesson5-二叉树
+二叉树的基础面试题
+1、https://leetcode-cn.com/problems/binary-tree-preorder-traversal/ [二叉树的前序遍历]
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+
+int Size(struct TreeNode *t)
+{
+    if(t == NULL)
+        return 0;
+    else
+        return Size(t->left) + Size(t->right) + 1;
+}
+
+void _preorderTraversal(struct TreeNode *t, int *preorder, int *pi)
+{    
+    if(t != NULL)
+    {
+        preorder[*pi] = t->val; //printf("%c", t->data);
+        (*pi)++;
+        _preorderTraversal(t->left, preorder, pi);
+        _preorderTraversal(t->right, preorder, pi);
+    }
+}
+
+int* preorderTraversal(struct TreeNode* root, int* returnSize)
+{
+    int n = Size(root);
+    int *preorder = (int*)malloc(sizeof(int) * n);
+    *returnSize = n;
+
+    int i = 0;
+    _preorderTraversal(root, preorder, &i);
+    return preorder;
+}
+
+
+2、https://leetcode-cn.com/problems/binary-tree-inorder-traversal/submissions/ [二叉树的中序遍历]
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+
+int Size(struct TreeNode *t)
+{
+    if(t == NULL)
+        return 0;
+    else
+        return Size(t->left) + Size(t->right) + 1;
+}
+
+void _inorderTraversal(struct TreeNode *t, int *inorder, int *pi)
+{
+    if(t != NULL)
+    {
+        _inorderTraversal(t->left, inorder, pi);
+        inorder[*pi] = t->val;
+        (*pi)++;
+        _inorderTraversal(t->right, inorder, pi);
+    }
+}
+
+int* inorderTraversal(struct TreeNode* root, int* returnSize)
+{
+    int n = Size(root);
+    int *inorder = (int*)malloc(sizeof(int) * n);
+    *returnSize = n;
+
+    int i = 0;
+    _inorderTraversal(root, inorder, &i);
+
+    return inorder;
+}
+
+3、https://leetcode-cn.com/problems/binary-tree-postorder-traversal/ [二叉树的后序遍历]
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+
+int Size(struct TreeNode *t)
+{
+    if(t == NULL)
+        return 0;
+    else
+        return Size(t->left) + Size(t->right) + 1;
+}
+
+void _postorderTraversal(struct TreeNode *t, int *postorder, int *pi)
+{
+    if(t != NULL)
+    {
+        _postorderTraversal(t->left,  postorder, pi);
+        _postorderTraversal(t->right, postorder, pi);
+        postorder[*pi] = t->val;
+        (*pi)++;
+    }    
+}
+
+int* postorderTraversal(struct TreeNode* root, int* returnSize)
+{
+     int n = Size(root);
+    int *postorder = (int*)malloc(sizeof(int) * n);
+    *returnSize = n;
+
+    int i = 0;
+    _postorderTraversal(root, postorder, &i);
+
+    return postorder;
+}
+
+4、https://leetcode-cn.com/problems/same-tree/ [相同的树]
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+
+bool isSameTree(struct TreeNode* p, struct TreeNode* q)
+{
+    if(p==NULL && q==NULL)
+        return true;
+    if(p==NULL || q==NULL)
+        return false;
+    return (p->val==q->val && isSameTree(p->left, q->left) && isSameTree(p->right, q->right));
+}
+
+5、https://leetcode-cn.com/problems/subtree-of-another-tree/ [另一个树的子树]
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+bool isSameTree(struct TreeNode* p, struct TreeNode* q)
+{
+    if(p==NULL && q==NULL)
+        return true;
+    if(p==NULL || q==NULL)
+        return false;
+    return (p->val==q->val && isSameTree(p->left, q->left) && isSameTree(p->right, q->right));
+}
+
+bool isSubtree(struct TreeNode* s, struct TreeNode* t)
+{
+    if(t == NULL)
+        return true;
+    if(s == NULL)
+        return false;
+    
+    if(isSameTree(s, t))
+        return true;
+    return isSubtree(s->left, t) || isSubtree(s->right, t);
+}
+
+6、https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/ [二叉树的最大深度]
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+
+int maxDepth(struct TreeNode* root)
+{
+    if(root == NULL)
+        return 0;
+    else
+    {
+        int left_h = maxDepth(root->left);
+        int right_h = maxDepth(root->right);
+        return (left_h > right_h ? left_h : right_h)+1;
+    }
+}
+
+7、https://leetcode-cn.com/problems/balanced-binary-tree/ [平衡二叉树]
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+int maxDepth(struct TreeNode* root)
+{
+    if(root == NULL)
+        return 0;
+    else
+    {
+        int left_h = maxDepth(root->left);
+        int right_h = maxDepth(root->right);
+        return (left_h > right_h ? left_h : right_h)+1;
+    }
+}
+
+bool isBalanced(struct TreeNode* root)
+{
+    if(root == NULL)
+        return true;
+    int left_h = maxDepth(root->left);
+    int right_h = maxDepth(root->right);
+
+    return abs(left_h-right_h)<2 && isBalanced(root->left) && isBalanced(root->right);
+}
+
+
+8、https://leetcode-cn.com/problems/symmetric-tree/ [对称二叉树]
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+
+bool _isSymmetric(struct TreeNode *t1, struct TreeNode *t2)
+{
+    if(t1==NULL && t2==NULL)
+        return true;
+    if(t1==NULL || t2==NULL)
+        return false;
+    
+    return t1->val==t2->val 
+           && _isSymmetric(t1->left, t2->right) 
+           && _isSymmetric(t1->right, t2->left);
+}
+
+bool isSymmetric(struct TreeNode* root)
+{
+    if(root == NULL)
+        return true;
+    return _isSymmetric(root->left, root->right);
+}
+
+9、https://www.nowcoder.com/practice/4b91205483694f449f94c179883c1fef?tpId=60&&tqId=29483&rp=1&ru=/activity/oj&qru=/ta/tsing-kaoyan/question-ranking [二叉树的构建及遍历]
+#include<stdio.h>
+#include<assert.h>
+#include<malloc.h>
+
+typedef struct BinTreeNode
+{
+    char data;
+    struct BinTreeNode *left;
+    struct BinTreeNode *right;
+}BinTreeNode;
+
+typedef BinTreeNode* BinTree;
+
+BinTree CreateBinTree(const char *str, int *pi)
+{
+    if(str[*pi]=='#' || str[*pi]=='\0')
+        return NULL;
+    else
+    {
+        BinTreeNode *t = (BinTreeNode*)malloc(sizeof(BinTreeNode));
+        assert(t != NULL);
+        t->data = str[*pi];
+        (*pi)++;
+        t->left = CreateBinTree(str, pi);
+        (*pi)++;
+        t->right = CreateBinTree(str, pi);
+        return t;
+    }
+}
+void InOrder(BinTree t)
+{
+    if(t != NULL)
+    {
+        InOrder(t->left);
+        printf("%c ",t->data);
+        InOrder(t->right);
+    }
+}
+int main()
+{
+    BinTree bt = NULL;
+    char str[100] = {0};
+    scanf("%s", str);
+    int i = 0;
+    bt = CreateBinTree(str, &i);
+    InOrder(bt);
+    
+    return 0;
+}
