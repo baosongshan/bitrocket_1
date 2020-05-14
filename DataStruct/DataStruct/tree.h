@@ -187,6 +187,12 @@ BinTreeNode* BinTreeCreate_2();
 void BinTreeCreateByStr(BinTree *bt, const char *str);
 BinTreeNode* BinTreeCreateByStr_1(const char *str, int *pindex);
 
+//恢复二叉树
+void BinTreeCreateByVLR_LVR(BinTree *bt, const char *VLR, const char *LVR);
+BinTreeNode* BinTreeCreateByVLR_LVR_1(const char *VLR, const char *LVR, int n);
+void BinTreeCreateByLRV_LVR(BinTree *bt, const char *VLR, const char *LVR);
+BinTreeNode* BinTreeCreateByLRV_LVR_1(const char *VLR, const char *LVR, int n);
+
 //递归遍历
 void PreOrder(BinTree *bt);
 void PreOrder_1(BinTreeNode *t);
@@ -296,6 +302,30 @@ BinTreeNode* BinTreeCreateByStr_1(const char *str, int *pindex)
 		return t;
 	}
 }
+
+//恢复二叉树
+void BinTreeCreateByVLR_LVR(BinTree *bt, const char *VLR, const char *LVR)
+{
+	int n = strlen(VLR);
+	bt->root = BinTreeCreateByVLR_LVR_1(VLR, LVR, n);
+}
+BinTreeNode* BinTreeCreateByVLR_LVR_1(const char *VLR, const char *LVR, int n)
+{
+	if(n == 0)
+		return NULL;
+	int k = 0;
+	while(VLR[0] != LVR[k])
+		k++;
+	BinTreeNode *t = (BinTreeNode*)malloc(sizeof(BinTreeNode));
+	assert(t != NULL);
+	t->data = LVR[k]; //VLR[0];
+
+	t->leftChild = BinTreeCreateByVLR_LVR_1(VLR+1, LVR, k);
+	t->rightChild = BinTreeCreateByVLR_LVR_1(VLR+k+1, LVR+k+1, n-k-1);
+	return t;
+}
+void BinTreeCreateByLRV_LVR(BinTree *bt, const char *VLR, const char *LVR);
+BinTreeNode* BinTreeCreateByLRV_LVR_1(const char *VLR, const char *LVR, int n);
 
 //遍历
 void PreOrder(BinTree *bt)
@@ -505,6 +535,106 @@ void PreOrder_1_NoR(BinTreeNode *t)
 				LinkStackPush(&st, top->leftChild);
 		}
 	}
+}
+
+void InOrder_NoR(BinTree *bt)
+{
+	InOrder_1_NoR(bt->root);
+}
+void InOrder_1_NoR(BinTreeNode *t)
+{
+	if(t != NULL)
+	{
+		LinkStack st;
+		LinkStackInit(&st);
+		BinTreeNode *top;
+		
+		BinTreeNode *cur = t;
+		while(cur || !LinkStackEmpty(&st))
+		{
+			while(cur)
+			{
+				LinkStackPush(&st, cur);
+				cur = cur->leftChild;
+			}
+			top = LinkStackTop(&st);
+			LinkStackPop(&st);
+			printf("%c ",top->data);
+
+			cur = top->rightChild;
+		}
+	}
+}
+void PostOrder_NoR(BinTree *bt)
+{
+	PostOrder_1_NoR(bt->root);
+}
+void PostOrder_1_NoR(BinTreeNode *t)
+{
+	if(t != NULL)
+	{
+		LinkStack st;
+		LinkStackInit(&st);
+		BinTreeNode *top, *prev = NULL;  //prev指向当前访问节点的前驱节点
+		BinTreeNode *cur = t;
+		while(cur || !LinkStackEmpty(&st))
+		{
+			while(cur)
+			{
+				LinkStackPush(&st, cur);
+				cur = cur->leftChild;
+			}
+			top = LinkStackTop(&st);
+			if(top->rightChild==NULL || top->rightChild == prev)
+			{
+				printf("%c ",top->data);
+				prev = top;
+				LinkStackPop(&st);
+			}
+			else
+			{
+				cur = top->rightChild;
+			}
+		}
+	}
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+//树的顺序存储结构
+typedef struct SeqBinTree
+{
+	char *data;
+	int   capacity;
+	int   size;
+}SeqBinTree;
+
+void SeqBinTreeInit(SeqBinTree *psbt);
+void SeqBinTreeInsert(SeqBinTree *psbt, char ar[], int n);
+void SeqBinTreePrint(SeqBinTree *psbt);
+
+void SeqBinTreeInit(SeqBinTree *psbt)
+{
+	psbt->data = (char*)malloc(sizeof(char) * 100);
+	psbt->capacity = 100;
+	psbt->size = 0;
+}
+
+void SeqBinTreeInsert(SeqBinTree *psbt, char ar[], int n)
+{
+	for(int i=0; i<n; ++i)
+	{
+		psbt->data[psbt->size++] = ar[i];
+	}
+}
+
+void SeqBinTreePrint(SeqBinTree *psbt)
+{
+	for(int i=0; i<psbt->size; ++i)
+	{
+		printf("%c ",psbt->data[i]);
+	}
+	printf("\n");
 }
 
 #endif /* _TREE_H_ */

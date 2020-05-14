@@ -1,12 +1,52 @@
 #include"seqlist.h"
-#include"list.h"
+//#include"list.h"
 //#include"stack.h"
 //#include"queue.h"
-#include"tree.h"
+//#include"tree.h"
+
+#include"heap.h"
+
+void main()
+{
+	int ar[] = {27,15,19,18,28,34,65,49,25,37};
+	int n = sizeof(ar) / sizeof(ar[0]); //
+
+	Heap minheap;
+	HeapInit(&minheap, n);
+
+	for(int i=0; i<n; ++i)
+		MinHeapInsert(&minheap, ar[i]);
+
+	HeapPrint(&minheap);
+}
 
 
+/*
+void main()
+{
+	char ar[] = {'A','B', 'G', 'C', 'D', 'Z', 'H', 'X', 'Y', 'E', 'F'};
+	int n = sizeof(ar) / sizeof(ar[0]);
+	SeqBinTree sbt;
+	SeqBinTreeInit(&sbt);
+
+	SeqBinTreeInsert(&sbt, ar, n);
+	SeqBinTreePrint(&sbt);
+}
+
+/*
 //ABC##DE##F##g#H##
 
+void main()
+{
+	const char *VLR = "ABCDEFGH";  //VLR+LVR ==> 
+	const char *LVR = "CBEDFAGH";
+	const char *LRV = "CEFDBHGA";  //LRV+LVR ==>     //VLR + LRV ==> ?
+
+	BinTree bt;
+	BinTreeCreateByVLR_LVR(&bt, VLR, LVR);
+}
+
+/*
 void main()
 {
 	const char *VLR = "ABCDEFGH";  //VLR+LVR ==> 
@@ -20,6 +60,14 @@ void main()
 
 	printf("VLR: ");
 	PreOrder_NoR(&bt);
+	printf("\n");
+
+	printf("LVR: ");
+	InOrder_NoR(&bt);
+	printf("\n");
+
+	printf("LRV: ");
+	PostOrder_NoR(&bt);
 	printf("\n");
 
 	BinTreeDestroy(&bt);
