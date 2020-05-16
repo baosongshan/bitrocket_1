@@ -4,8 +4,84 @@
 //#include"queue.h"
 //#include"tree.h"
 
-#include"heap.h"
+//#include"heap.h"
 
+void Func1(int N)
+{
+	int count = 0;
+	//N^2
+	for (int i = 0; i < N; ++i)       //N 0 1 2 ...... N
+	{
+		for (int j = 0; j < N; ++j)   //N N N N ...... N
+		{
+			++count;
+		}
+	}
+
+	//2 * N
+	for (int k = 0; k < 2 * N; ++k)
+	{
+		++count;
+	}
+
+	//10
+	int M = 10;
+	while (M--)
+	{
+		++count;
+	}
+	printf("count = %d\n", count);
+
+	//N^2 + 2*N + 10
+}
+
+void main()
+{
+	int N = 1000000;
+	unsigned long start_time = clock();  //
+	Func1(N);
+	unsigned long end_time = clock();
+	printf("time = %d\n", end_time - start_time);
+}
+
+/*
+#define ROW 5
+#define COL 5
+
+void main()
+{
+	int **ppa = (int**)malloc(sizeof(int*) * ROW);
+	for(int i=0; i<ROW; ++i)
+	{
+		ppa[i] = (int*)malloc(sizeof(int) * COL);
+	}
+
+	//int ppa[ROW][COL];
+	for(int i=0; i<ROW; ++i)
+	{
+		for(int j=0; j<COL; ++j)
+		{
+			ppa[i][j] = i+j;
+		}
+	}
+
+	for(int i=0; i<ROW; ++i)
+	{
+		for(int j=0; j<COL; ++j)
+		{
+			printf("%d ",ppa[i][j]);
+		}
+		printf("\n");
+	}
+
+
+	//ÊÍ·Å
+	for(int i=0; i<ROW; ++i)
+		free(ppa[i]);
+	free(ppa);
+}
+
+/*
 void main()
 {
 	int ar[] = {27,15,19,18,28,34,65,49,25,37};
@@ -16,8 +92,46 @@ void main()
 
 	for(int i=0; i<n; ++i)
 		MinHeapInsert(&minheap, ar[i]);
-
 	HeapPrint(&minheap);
+
+	while(!HeapEmpty(&minheap))
+	{
+		printf("%d ", MinHeapRemove(&minheap));
+		//HeapPrint(&minheap);
+	}
+	printf("\n");
+}
+
+/*
+void main()
+{
+	int ar[] = {27,15,19,18,28,34,65,49,25,37};
+	int n = sizeof(ar) / sizeof(ar[0]); //
+
+	Heap minheap;
+	HeapInit(&minheap, n);
+	HeapSort(&minheap, ar, n);
+}
+
+/*
+void main()
+{
+	int ar[] = {27,15,19,18,28,34,65,49,25,37};
+	int n = sizeof(ar) / sizeof(ar[0]); //
+
+	Heap minheap;
+	HeapInit(&minheap, n);
+
+	for(int i=0; i<n; ++i)
+		MinHeapInsert(&minheap, ar[i]);
+	HeapPrint(&minheap);
+
+	while(!HeapEmpty(&minheap))
+	{
+		printf("%d ", MinHeapRemove(&minheap));
+		//HeapPrint(&minheap);
+	}
+	printf("\n");
 }
 
 
