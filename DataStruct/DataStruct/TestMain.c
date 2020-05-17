@@ -5,7 +5,42 @@
 //#include"tree.h"
 
 //#include"heap.h"
+//5! = 5*4*3*2*1
+unsigned long long Factorial(int n)
+{
+	unsigned long long result = 1;
+	for(int i=1; i<=n; ++i)
+		result *= i;
+	return result;
+}
 
+//n! = n * 4!==> n±È½Ï´ó
+unsigned long long Factorial_R(int n)
+{
+	if(n == 1)
+		return 1;
+	else
+		return n * Factorial_R(n-1);
+}
+
+void main()
+{
+	int n;
+	printf("input n:>");
+	scanf("%d", &n);
+	unsigned long long res = Factorial(n);
+	printf("%u\n", res);
+}
+
+/*
+void main()
+{
+	char *str = "Hello Bit.";
+	char ch = 'l';
+	char *res = strchr(str, ch);
+}
+
+/*
 void Func1(int N)
 {
 	int count = 0;
@@ -37,7 +72,7 @@ void Func1(int N)
 
 void main()
 {
-	int N = 1000000;
+	int N = 1000;
 	unsigned long start_time = clock();  //
 	Func1(N);
 	unsigned long end_time = clock();
