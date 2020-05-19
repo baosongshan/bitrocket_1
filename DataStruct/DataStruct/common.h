@@ -6,7 +6,7 @@
 #include<stdbool.h>
 #include<vld.h>
 
-#define ElemType char
+#define ElemType int
 
 void Swap(ElemType *a, ElemType *b)
 {
