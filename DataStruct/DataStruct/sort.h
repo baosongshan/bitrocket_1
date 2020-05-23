@@ -429,9 +429,58 @@ void MergeSort(int *elem, int first, int last)
 //基数排序
 #define K 3
 #define RADIX 10
-void _Distribute(int *elem, int first, int last, int k);
-void _Collect(int *elem);
-void RadixSort(int *elem, int first, int last);
+#include"list.h"
+
+static SList list[RADIX];
+
+//109
+int _GetKey(int value, int k)
+{
+	int key;
+	while(k >= 0)
+	{
+		key = value % 10; //0
+		value /= 10;      //10
+		k--;
+	}
+	return key;
+}
+void _Distribute(int *elem, int first, int last, int k)
+{
+	for(int i=first; i<last; ++i)
+	{
+		int key = _GetKey(elem[i], k);
+		SListPushBack(&list[key], elem[i]);
+	}
+}
+void _Collect(int *elem)
+{
+	int k = 0;
+	for(int i=0; i<RADIX; ++i)
+	{
+		SListNode *p = list[i].head;
+		while(p != NULL)
+		{
+			elem[k++] = p->data;
+			SListPopFront(&list[i]);
+			p = list[i].head;
+		}
+	}
+}
+void RadixSort(int *elem, int first, int last)
+{
+	for(int i=0; i<RADIX; ++i)
+	{
+		SListInit(&list[0]); //0 1 2 3 4 5 6 7 8 9
+	}
+	for(int i=0; i<K; ++i)
+	{
+		//1 分发
+		_Distribute(elem, first, last, i);
+		//2 回收
+		_Collect(elem);
+	}
+}
 
 void TestSort(int *elem, int first, int last)
 {
@@ -448,7 +497,8 @@ void TestSort(int *elem, int first, int last)
 	//QuickSort_1(elem, first, last);
 	//QuickSort_2(elem, first, last);
 	//QuickSort_3(elem, first, last);
-	MergeSort(elem, first, last);
+	//MergeSort(elem, first, last);
+	RadixSort(elem, first, last);
 }
 
 void TestSortEfficiency()
@@ -566,6 +616,25 @@ void TestSortEfficiency()
 }
 
 /*
+
+void _Collect(int *elem)
+{
+	int k = 0;
+	for(int i=0; i<RADIX; ++i)
+	{
+		SListNode *p = list[i].head;
+		while(p != NULL)
+		{
+			elem[k++] = p->data;
+			p = p->next;
+		}
+	}
+
+	for(int i=0; i<RADIX; ++i)
+		SListClear(&list[i]);
+
+}
+
 //希尔排序
 int dlta[] = {5,3,2,1};
 void _ShellSort(int *elem, int first, int last, int dk)
