@@ -33,6 +33,20 @@ CDateTime::CDateTime()
 	m_time.m_second = 0;
 }
 
+CDateTime::CDateTime(int year, int month, int day)
+{
+	m_date.m_year = year;
+	m_date.m_month = month;
+	m_date.m_day = day;
+
+	time_t te;
+	time(&te);
+	struct tm *ptm = localtime(&te);
+	m_time.m_hour = ptm->tm_hour;
+	m_time.m_minute = ptm->tm_min;
+	m_time.m_second = ptm->tm_sec;
+}
+
 CDateTime CDateTime::GetCurDateTime()
 {
 	time_t te;
@@ -70,4 +84,55 @@ void CDateTime::DateTimeShow()
 		system("cls");
 	}
 	ShowCursor();
+}
+
+bool CDateTime::IsLeap(int year)
+{
+	return (year%4==0&&year%100!=0) ||(year%400==0);
+}
+
+int CDateTime::GetMonthDays(int year, int month)
+{
+	int days[13] = {29, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	if(month==2 && IsLeap(year))
+		return days[0];
+	return days[month];
+}
+
+int CDateTime::GetWeekByYMD(int year, int month, int day)
+{
+	int D = 0;
+	for(int i=1; i<month; ++i)
+	{
+		D += GetMonthDays(year, i);
+	}
+	D += day;
+
+	//²ÌÀÕ¹«Ê½
+	int x = (year-1)+(year-1)/4 - (year-1)/100 +(year-1)/400 + D;
+	return x % 7;
+}
+
+CDateTime CDateTime::NextDateTime(int n)
+{
+	int year = m_date.m_year;
+	int month = m_date.m_month;
+	int day = m_date.m_day;
+
+	int mday = GetMonthDays(year, month);
+
+	while(day+n > mday)
+	{
+		month++;
+		if(month > 12)
+		{
+			year++;
+			month = 1;
+		}
+		n -= mday;
+		mday = GetMonthDays(year, month);
+	}
+
+	day += n;
+	return CDateTime(year, month, day);
 }

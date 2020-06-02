@@ -26,6 +26,10 @@ class CDateTime
 	friend ostream& operator<<(ostream &out, const CDateTime &dt);
 public:
 	CDateTime();
+	CDateTime(int year, int month, int day);
+public:
+	bool IsLeap(int year);
+	int GetMonthDays(int year, int month);
 public:
 	CDateTime NextDateTime(int n);
 	CDateTime PrevDateTime(int n);
@@ -51,7 +55,7 @@ public:
 	CDateTime GetCurDateTime();
 	void DateTimeShow();
 
-	void DateTimeCalendar();
+	void DateTimeCalendar(int year, int month);
 private:
 	Date m_date;
 	Time m_time;
