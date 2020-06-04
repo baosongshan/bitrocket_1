@@ -55,7 +55,7 @@ public:
 	CDateTime GetCurDateTime();
 	void DateTimeShow();
 
-	void DateTimeCalendar(int year, int month);
+	void DateTimeCalendar(int year, int month); //
 private:
 	Date m_date;
 	Time m_time;

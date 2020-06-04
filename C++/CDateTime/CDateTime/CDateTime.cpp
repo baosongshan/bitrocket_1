@@ -136,3 +136,30 @@ CDateTime CDateTime::NextDateTime(int n)
 	day += n;
 	return CDateTime(year, month, day);
 }
+
+void CDateTime::DateTimeCalendar(int year, int month)
+{
+	cout<<year<<"年"<<month<<"月"<<endl;
+	char* title[] = {"一","二","三","四","五","六","日"};
+	for(int i=0; i<7; ++i)
+		printf("%-5s", title[i]);
+	cout<<endl;
+
+	int mdays = GetMonthDays(year, month);
+	int week = GetWeekByYMD(year, month, 1);
+	if(week == 0)
+		week = 7;
+	for(int i=0; i<week-1; ++i)
+	{
+		printf("%-5s"," ");
+	}
+	for(int i=1; i<=mdays; ++i)
+	{
+		printf("%-5d", i);
+		if((i+week-1) % 7 == 0)
+		{
+			cout<<endl<<endl;
+		}
+	}
+	cout<<endl;
+}

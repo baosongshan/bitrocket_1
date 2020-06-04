@@ -3,6 +3,13 @@
 void main()
 {
 	CDateTime dt;
+	dt.DateTimeCalendar(2020, 8);
+}
+
+/*
+void main()
+{
+	CDateTime dt;
 	//dt.DateTimeShow();
 	dt = dt.GetCurDateTime();
 	cout<<dt<<endl;
@@ -21,3 +28,4 @@ void main()
 	//dt++;  //++dt;
 	//dt--;  //--dt;
 }
+*/
