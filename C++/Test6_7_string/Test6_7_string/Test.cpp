@@ -1,20 +1,57 @@
 #include<iostream>
 #include<string>
-#include<vector>
-#include<list>
-#include<assert.h>
 #include<vld.h>
 using namespace std;
 
-
 void main()
 {
-	string str("abc"); //∂¿¡¢
-	string str1 = str;
+	string str = "abc";
 	cout<<"str = "<<str<<endl;
-	cout<<"str1 = "<<str1<<endl;
+	str.resize(2, '@');
+	cout<<"str = "<<str<<endl;
+
+	auto it = str.begin();
+	while(it != str.end())
+	{
+		cout<<*it;
+		++it;
+	}
+	cout<<endl;
+}
+
+/*
+void main()
+{
+	string url = "http://bitedu.vip/thread-3011.htm";
+	size_t index = url.find('z');
+	
+	if(index != string::npos)
+		cout<<"index = "<<index<<endl;
+	else
+		cout<<"≤ª¥Ê‘⁄."<<endl;
+}
+
+
+/*
+void main()
+{
+	string str("abc");
+	cout<<"size = "<<str.size()<<endl;
+	cout<<"capacity = "<<str.capacity()<<endl;
+	str.reserve(20);
+	cout<<"size = "<<str.size()<<endl;
+	cout<<"capacity = "<<str.capacity()<<endl;
+	str.push_back('x');
+	str+="yz";
+	str += 'a';
+
+	//str.append()
+	
+	cout<<str[10]<<endl;
+	cout<<"str = "<<str<<endl;
 
 }
+
 /*
 namespace bit
 {
@@ -111,7 +148,7 @@ void main()
 	cout<<"str = "<<str<<endl;
 	cout<<"str1 = "<<str1<<endl;
 
-	//str.to_upper();
+	str.to_upper();
 
 	cout<<"str = "<<str<<endl;
 	cout<<"str1 = "<<str1<<endl;
