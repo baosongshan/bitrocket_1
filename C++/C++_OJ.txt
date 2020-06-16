@@ -158,3 +158,257 @@ int main()
 
 
 
+Lesson11 - stack和queue
+1、https://leetcode-cn.com/problems/min-stack/ [最小栈] 
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    MinStack() {
+        
+    }
+    
+    void push(int x) {
+        if(min_st.empty() || x<=min_st.top())
+            min_st.push(x);
+        st.push(x);
+    }
+    
+    void pop() {
+        int val = st.top();
+        st.pop();
+        if(val == min_st.top())
+            min_st.pop();
+    }
+    
+    int top() {
+        return st.top();
+    }
+    
+    int getMin() {
+        return min_st.top();
+    }
+private:
+    stack<int> st;
+    stack<int> min_st;
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(x);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
+
+2、https://www.nowcoder.com/practice/d77d11405cc7470d82554cb392585106?tpId=13&&tqId=11174&rp=1&ru=/activity/oj&qru=/ta/coding-interviews/question-ranking [栈的弹出压入序列]
+class Solution {
+public:
+    bool IsPopOrder(vector<int> pushV,vector<int> popV) {
+        if(pushV.size() != popV.size())
+            return false;
+        
+        stack<int> st;
+        int in_id=0, out_id=0;
+        while(out_id < popV.size())
+        {
+            while(st.empty() || popV[out_id]!=st.top())
+            {
+                if(in_id < pushV.size())
+                    st.push(pushV[in_id++]);
+                else
+                    return false;
+            }
+            st.pop();
+            out_id++;
+        }
+        return true;
+    }
+};
+
+3、https://leetcode-cn.com/problems/evaluate-reverse-polish-notation/ [逆波兰表达式求值]
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        int len = tokens.size();
+        stack<int> st;
+        for(size_t i=0; i<len; ++i)
+        {
+            if(!(tokens[i]=="+" || tokens[i]=="-" || tokens[i]=="*" || tokens[i]=="/"))   
+                st.push(atoi(tokens[i].c_str()));        
+            else
+            {
+                int left_value, right_value;
+                right_value = st.top();
+                st.pop();
+                left_value = st.top();
+                st.pop();
+                
+                if(tokens[i]=="+")
+                    st.push(left_value+right_value);
+                else if(tokens[i]=="-")
+                    st.push(left_value-right_value);
+                else if(tokens[i]=="*")
+                    st.push(left_value*right_value);
+                else
+                    st.push(left_value/right_value);
+            } 
+        }
+        return st.top();
+    }
+};
+
+4、https://leetcode-cn.com/problems/implement-queue-using-stacks/ [用栈实现队列]
+class MyQueue {
+public:
+    /** Initialize your data structure here. */
+    MyQueue() {
+
+    }
+    
+    /** Push element x to the back of queue. */
+    void push(int x) {
+        in_st.push(x);
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    int pop() {
+        if(out_st.empty())
+        {
+            while(!in_st.empty())
+            {
+               out_st.push(in_st.top());
+               in_st.pop();
+            }
+        }
+
+        int val = out_st.top();
+        out_st.pop();
+        return val;
+    }
+    
+    /** Get the front element. */
+    int peek() {
+        if(out_st.empty())
+        {
+            while(!in_st.empty())
+            {
+               out_st.push(in_st.top());
+               in_st.pop();
+            }
+        }
+
+        return out_st.top();
+    }
+    
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return in_st.empty() && out_st.empty();
+    }
+private:
+    stack<int> in_st;
+    stack<int> out_st;
+};
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue* obj = new MyQueue();
+ * obj->push(x);
+ * int param_2 = obj->pop();
+ * int param_3 = obj->peek();
+ * bool param_4 = obj->empty();
+ */
+
+5、https://leetcode-cn.com/problems/implement-stack-using-queues/ [用队列实现栈]
+class MyStack {
+public:
+    /** Initialize your data structure here. */
+    MyStack() {
+
+    }
+    
+    /** Push element x onto stack. */
+    void push(int x) {
+        if(!q1.empty())
+            q1.push(x);
+        else
+            q2.push(x);
+    }
+    
+    /** Removes the element on top of the stack and returns that element. */
+    int pop() {
+        int value;
+        while(!q1.empty())
+        {
+            value = q1.front();
+            q1.pop();
+            if(q1.empty())
+                return value;
+            q2.push(value);
+        }
+
+        while(!q2.empty())
+        {
+            value = q2.front();
+            q2.pop();
+            if(q2.empty())
+                break;
+            q1.push(value);
+        }
+        return value;
+    }
+    
+    /** Get the top element. */
+    int top() {
+        int value;
+        while(!q1.empty())
+        {
+            value = q1.front();
+            q1.pop();
+            q2.push(value);
+            if(q1.empty())
+                return value;
+        }
+
+        while(!q2.empty())
+        {
+            value = q2.front();
+            q2.pop();
+            q1.push(value);
+            if(q2.empty())
+                break;
+        }
+        return value;
+    }
+    
+    /** Returns whether the stack is empty. */
+    bool empty() {
+        return q1.empty() && q2.empty(); 
+    }
+private:
+    queue<int> q1;
+    queue<int> q2;
+};
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack* obj = new MyStack();
+ * obj->push(x);
+ * int param_2 = obj->pop();
+ * int param_3 = obj->top();
+ * bool param_4 = obj->empty();
+ */
+
+6、https://leetcode-cn.com/problems/kth-largest-element-in-an-array/ [数组中第K个大的元素]
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int> pq;
+        for(const auto &e : nums)
+            pq.push(e);
+        
+        for(int i=0; i<k-1; ++i)
+            pq.pop();
+        return pq.top();
+    }
+};
