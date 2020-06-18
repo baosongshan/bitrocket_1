@@ -1,3 +1,30 @@
+Lesson4 ---类与对象下
+1、https://www.nowcoder.com/practice/7a0da8fc483247ff8800059e12d7caf1?tpId=13&tqId=11200&tPage=3&rp=3&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking [求1+2+3+...+n]
+class Solution {
+public:
+    class Sum
+    {
+    public:
+        Sum()
+        {
+            sum += i;
+            i++;
+        }
+    };
+    int Sum_Solution(int n) {
+        i = 1;
+        sum = 0;
+        Sum ar[n];
+        return sum;
+    }
+    
+    static size_t sum;
+    static size_t i;
+};
+
+size_t Solution::sum = 0;
+size_t Solution::i = 0;
+
 Lesson8 ---string
 1、https://www.nowcoder.com/practice/1277c681251b4372bdef344468e4f26e [字符串转整形数字]
 
@@ -156,6 +183,355 @@ int main()
     return 0;
 }
 
+6、https://leetcode-cn.com/problems/valid-palindrome/ [验证回文串]
+class Solution {
+public:
+    bool isCharOrNum(char c)
+    {
+        return ((c>='0'&&c<='9') || (c>='a'&&c<='z'));
+    }
+    bool isPalindrome(string s) {
+        if(s.size() <= 1)
+            return true;
+        for(int i=0; i<s.size(); ++i)
+        {
+            if(s[i]>='A' && s[i]<='Z')
+                s[i] += 32;
+        }
+
+        int start = 0;
+        int end = s.size()-1;
+        while(start < end)
+        {
+            while(start<end && !isCharOrNum(s[start]))
+                start++;
+            while(start<end && !isCharOrNum(s[end]))
+                end--;
+            if(s[start] != s[end])
+                return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+};
+
+课后练习1、https://leetcode-cn.com/problems/reverse-string-ii/ [反转字符串 II]
+class Solution {
+public:
+    void reverse(string &s, int start, int end)
+    {
+        while(start < end)
+        {
+            char tmp = s[start];
+            s[start] = s[end];
+            s[end] = tmp;
+
+            start++;
+            end--;
+        }
+    }
+    string reverseStr(string s, int k) {
+        int len = s.size();
+        for(int i=0; i<len; i+=2*k)
+        {
+            if(i+k < len)
+                reverse(s, i, i+k-1); //k
+            else
+                reverse(s, i, len-1);
+        }
+        return s;
+    }
+};
+
+课后练习2、https://leetcode-cn.com/problems/reverse-words-in-a-string-iii/ [反转字符串中的单词 III]
+class Solution {
+public:
+    void reverse(string &s, int start, int end)
+    {
+        while(start < end)
+        {
+            char tmp = s[start];
+            s[start] = s[end];
+            s[end] = tmp;
+
+            start++;
+            end--;
+        }
+    }
+    string reverseWords(string s) {
+        size_t start = 0;
+        size_t end = 0;
+        while(start < s.size())
+        {  
+            end = s.find(' ', start);
+            if(end == string::npos)
+                break;
+            reverse(s, start, end-1);
+            start = end+1;
+        }
+        reverse(s, start, s.size()-1);
+        return s;
+    }
+};
+
+课后练习3、https://leetcode-cn.com/problems/multiply-strings/description/ [字符串相乘]
+class Solution {
+public:  
+    string MulItem(string num, char ch)
+    {
+        string tmp;
+        int sign = 0;
+        for(size_t i=0; i<num.size(); ++i)
+        {
+            int  mul = (ch-'0') * (num[i]-'0') + sign;
+            if(mul >= 10)
+            {
+                sign = mul / 10;
+                mul %= 10;
+            }
+            else
+                sign = 0;
+            tmp += (mul+'0'); //837
+        }        
+        if(sign > 0)
+            tmp += (sign+'0');
+        return tmp;
+    }
+    int AddItem(int a, int b, int &sign)
+    {
+        int sum = a + b + sign;
+        if(sum >= 10)
+        {
+            sum -= 10;
+            sign = 1;
+        }
+        else
+            sign = 0;
+        return sum;
+    }
+    void MoveAdd(string &res, string &tmp, int k)
+    {
+        int i = k;
+        int j = 0;
+        int sign = 0;
+        while(i<res.size() && j<tmp.size())
+        {
+            res[i] = AddItem(res[i]-'0', tmp[j]-'0', sign) + '0';
+            i++;
+            j++;
+        }
+        while(j < tmp.size())
+        {
+            int sum = AddItem(0, tmp[j]-'0', sign);
+            res += (sum+'0');
+            j++;
+        }
+        if(sign > 0)
+            res += (sign+'0');
+    }
+                          //123          456
+    string multiply(string num1, string num2) {
+        if(num1=="0" || num2=="0")
+            return string("0");
+        reverse(num1.begin(), num1.end()); //3 2 1
+        reverse(num2.begin(), num2.end()); //6 5 4
+        string tmp, res;
+        for(size_t i=0; i<num2.size(); ++i)
+        {
+            tmp = MulItem(num1, num2[i]);
+            MoveAdd(res, tmp, i);
+            tmp.clear();
+        }
+
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
+
+
+课后练习4、https://www.nowcoder.com/practice/e896d0f82f1246a3aa7b232ce38029d4?tpId=37&&tqId=21282&rp=1&ru=/activity/oj&qru=/ta/huawei/question-ranking [找出字符串中第一个只出现一次的字符]
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    string str;
+    while(cin>>str)
+    {
+        size_t i;
+        for(i=0; i<str.size(); ++i)
+        {
+            int index = str.find(str[i]);
+            int reverse_index = str.rfind(str[i]);
+            if(index == reverse_index)
+            {
+                cout<<str[i]<<endl;
+                break;
+            }
+        }
+        if(i == str.size())
+            cout<<-1<<endl;
+    }
+    return 0;
+}
+
+Lesson9 -vector
+1、https://leetcode-cn.com/problems/single-number/ [只出现一次的数字]
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int res = 0;
+        for(const auto &e : nums)
+            res ^= e;
+        return res;
+    }
+};
+
+2、https://leetcode-cn.com/problems/pascals-triangle/description/ [杨辉三角]
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) 
+    {
+        vector<vector<int>> vv;
+        vv.resize(numRows);
+        for(int i=0; i<numRows; ++i)
+        {
+            vv[i].resize(i+1, 0);
+            vv[i][0] = vv[i][i] = 1;
+        }
+        for(int i=1; i<vv.size(); ++i)
+        {
+            for(int j=1; j<vv[i].size()-1; ++j)
+            {
+                vv[i][j] = vv[i-1][j-1] + vv[i-1][j];
+            }            
+        }
+        return vv;
+    }
+};
+
+3、https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/ [删除排序数组中的重复项]
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if(nums.size() == 1)
+            return 1;
+        
+        auto it = nums.begin();
+        auto it1 = it;
+        it1++;
+        while(it != nums.end())
+        {
+            while(it1!=nums.end() && *it1==*it)
+                it1++;
+            it = nums.erase(++it,  it1);
+            it1 = it;
+            it1++;
+        }
+        return nums.size();
+    }
+};
+
+4、https://leetcode-cn.com/problems/single-number-ii/ [只出现一次的数字 II]
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int result = 0;
+        for(int i=0; i<32; ++i)
+        {
+            int mask = (1 << i); //掩码
+            int count = 0;
+            for(int j=0; j<nums.size(); ++j)
+            {
+                if((mask & nums[j]) != 0)
+                    count++;
+            }
+            if(count % 3 == 1)
+                result = mask | result;
+        }
+        return result;
+    }
+};
+
+5、https://leetcode-cn.com/problems/single-number-iii/ [只出现一次的数字 III]
+//暴力法
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) 
+    {
+        //暴力法
+        int map[1000000][2] = {0};  //[0] -->数字
+                                  //[1] -->次数
+                                
+        int i, j, k = 0; //出现不同数字的个数
+        for(i=0; i<nums.size(); ++i)
+        {
+            for(j=0; j<k; ++j)
+            {
+                if(map[j][0] == nums[i])
+                {
+                    map[j][1]++;
+                    break;                    
+                }
+            }
+            if(j == k)
+            {
+                map[k][0] = nums[i];
+                map[k][1] = 1; //表示第一次出现
+                k++;            
+            }
+        }
+
+        vector<int> res;
+        for(i=0; i<k; ++i)
+        {
+            if(map[i][1] == 1)
+                res.push_back(map[i][0]);
+        }
+        return res;
+    }
+};
+
+//异或
+
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) 
+    {
+        int s = 0;
+        for(int i=0; i<nums.size(); ++i)
+            s ^= nums[i];
+
+        int lowbit = s & -s;
+        int val1 = 0, val2 = 0;
+        for(auto x : nums)
+        {
+            if((x & lowbit) == 0)
+                val1 ^= x;
+            else
+                val2 ^= x;            
+        }
+        return vector<int>{val1, val2};
+    }
+};
+
+
+6、https://www.nowcoder.com/practice/e8a1b01a2df14cb2b228b30ee6a92163?tpId=13&&tqId=11181&rp=1&ru=/activity/oj&qru=/ta/coding-interviews/question-ranking [数组中出现次数超过一半的数字]
+class Solution {
+public:
+    int MoreThanHalfNum_Solution(vector<int> numbers) {
+        sort(numbers.begin(), numbers.end());
+        int mid_val = numbers[numbers.size()/2];
+        int count = 0;
+        for(int i=0; i<numbers.size(); ++i)
+        {
+            if(numbers[i] == mid_val)
+                count++;
+        }
+        return count > (numbers.size()/2) ? mid_val : 0;
+    }
+};
 
 
 Lesson11 - stack和queue
