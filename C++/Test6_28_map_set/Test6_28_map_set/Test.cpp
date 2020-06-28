@@ -1,4 +1,12 @@
 #include<iostream>
+#include<string>
+#include<vector>
+#include<set>
+#include<map>
+#include<functional>
+using namespace std;
+
+#include<iostream>
 using namespace std;
 
 
@@ -65,6 +73,10 @@ public:
 	Type& operator*()const
 	{
 		return node->data;
+	}
+	Type* operator->()const
+	{
+		return &(node->data);
 	}
 	bool operator!=(const self &it)const
 	{
@@ -293,31 +305,359 @@ void RBTree<Type>::Insert_Fixup(RBTreeNode<Type> *&t, RBTreeNode<Type> *x)
 /////////////////////////////////////////////////////////////////////////////////////////////////
 template<class Type>
 class Set
-{};
-template<class Type>
-class Map
-{};
-
-
-int main()
 {
-	int ar[] = {10, 7, 8, 15, 5, 6, 11, 13, 12};
+public:
+	typedef Type value_type;
+	//typename typedef RBTree<value_type>::iterator iterator;
+	typedef rb_iterator<Type> iterator;
+public:
+	Set()
+	{}
+public:
+	iterator begin()
+	{
+		return _Tr.begin();
+	}
+	iterator end()
+	{
+		return _Tr.end();
+	}
+	void set_endnode()
+	{
+		_Tr.set_endnode();
+	}
+public:
+	size_t size()const
+	{
+		return _Tr.size();
+	}
+public:
+	void insert(const Type &x)
+	{
+		_Tr.Insert(x);;
+	}
+	
+private:
+	RBTree<value_type> _Tr;
+};
+template<class Type1, class Type2>
+class Map
+{
+public:
+	typedef pair<Type1,Type2> value_type;
+	typedef rb_iterator<value_type> iterator;
+public:
+	Map()
+	{}
+public:
+	iterator begin()
+	{return _Tr.begin();}
+	iterator end()
+	{return _Tr.end();}
+	void set_endnode()
+	{
+		_Tr.set_endnode();
+	}
+public:
+	void insert(const value_type &x)
+	{
+		_Tr.Insert(x);
+	}
+private:
+	RBTree<value_type> _Tr;
+};
+void main()
+{
+	pair<int, string> v1 = {1, "Student"};
+	pair<int, string> v2 = {3, "Teacher"};
+	pair<int, string> v3 = {4, "Bit"};
+	pair<int, string> v4 = {2, "Friend"};
+
+	Map<int, string> imap;
+	imap.insert(v1);
+	imap.insert(v2);
+	imap.insert(v3);
+	imap.insert(v4);
+
+	imap.set_endnode();
+
+	auto it = imap.begin();
+	while(it != imap.end())
+	{
+		cout<<it->first<<" : "<<it->second<<endl;
+		++it;
+	}
+
+}
+
+/*
+void main()
+{
+	int ar[] = {4,8,9,0,2,5,1,7}; 
 	int n = sizeof(ar) / sizeof(ar[0]);
-	RBTree<int> rb;
+	Set<int> is;
 	for(int i=0; i<n; ++i)
-		rb.Insert(ar[i]);
+		is.insert(ar[i]);
 
-	rb.set_endnode();
+	is.set_endnode();
 
-	cout<<"size = "<<rb.size()<<endl;
+	cout<<"size = "<<is.size()<<endl;
 
-
-	auto it = rb.begin();
-	while(it != rb.end())
+	auto it = is.begin();
+	while(it != is.end())
 	{
 		cout<<*it<<" ";
 		++it;
 	}
 	cout<<endl;
-	return 0;
 }
+
+
+/*
+void main()
+{
+	map<int, string> ismap = 
+	{{1, "Student"}, {3, "Teacher"}, {4, "Bit"}, {2, "Friend"},
+	{1, "Stu"}, {3, "Teacher"}, {4, "Bit"}, {2, "Friend"}};
+	for(auto &e : ismap)
+		cout<<e.first<<" : "<<e.second<<endl;
+
+	multimap<int, string> multi_ismap = 
+	{{1, "Student"}, {3, "Teacher"}, {4, "Bit"}, {2, "Friend"},
+	{1, "Stu"}, {3, "Teacher"}, {4, "Bit"}, {2, "Friend"}};
+	for(auto &e : multi_ismap)
+		cout<<e.first<<" : "<<e.second<<endl;
+}
+
+/*
+void main()
+{
+	map<int, string> ismap = {{1, "Student"}, {3, "Teacher"}, {4, "Bit"}, {2, "Friend"}};
+	for(auto &e : ismap)
+		cout<<e.first<<" : "<<e.second<<endl;
+
+	ismap[1] = "学生";
+	ismap[3] = "老师";
+	ismap[4] = "比特";
+	ismap[2] = "朋友";  //关键值存在则修改数据，若不存在则插入数据
+
+	ismap[5] = "西安";  //5-"西安"
+	//ismap.at(5);
+
+	for(auto &e : ismap)
+		cout<<e.first<<" : "<<e.second<<endl;
+}
+
+/*
+void main()
+{
+	map<int, string> ismap = {{1, "Student"}, {3, "Teacher"}, {4, "Bit"}, {2, "Friend"}};
+	for(auto &e : ismap)
+		cout<<e.first<<" : "<<e.second<<endl;
+}
+
+
+void main()
+{
+	map<int, string> ismap;
+	ismap.insert(make_pair(1, "Student"));
+	ismap.insert(make_pair(3, "Teacher"));
+	ismap.insert(make_pair(4, "Bit"));
+	ismap.insert(make_pair(2, "Friend"));
+
+	for(auto &e : ismap)
+		cout<<e.first<<" : "<<e.second<<endl;
+}
+
+/*
+void main()
+{
+	pair<int, string> v1 = {1, "Student"};
+	pair<int, string> v2 = {3, "Teacher"};
+	pair<int, string> v3 = {4, "Bit"};
+	pair<int, string> v4 = {2, "Friend"};
+	
+	//pair
+	//map<int, string, greater<int>> ismap;
+	map<int, string> ismap;
+	ismap.insert(v1);
+	ismap.insert(v2);
+	ismap.insert(v3);
+	ismap.insert(v4);
+
+	for(auto &e : ismap)
+		cout<<e.first<<" : "<<e.second<<endl;
+}
+
+/*
+void main()
+{
+	pair<int, string> v1 = {1, "Student"};
+	pair<int, string> v2 = {3, "Teacher"};
+	pair<int, string> v3 = {4, "Bit"};
+	pair<int, string> v4 = {2, "Friend"};
+	
+	//pair
+	//map<int, string, greater<int>> ismap;
+	map<int, string> ismap;
+	ismap.insert(v1);
+	ismap.insert(v2);
+	ismap.insert(v3);
+	ismap.insert(v4);
+
+	auto it = ismap.begin();
+	while(it != ismap.end())
+	{
+		cout<<it->first<<" : "<<it->second<<endl;
+		++it;
+	}
+
+
+}
+
+/*
+void main()
+{
+	set<int> is = {4,8,9,5,0,2,5,5,5,5,5,1,5,5,5,7};
+	cout<<"is size = "<<is.count(50)<<endl;
+	multiset<int> multi_is = {4,8,9,5,0,2,5,5,5,5,5,1,5,5,5,7};
+	cout<<"multi_is size = "<<multi_is.count(5)<<endl;
+}
+
+/*
+void main()
+{
+	set<int> is = {4,8,9,0,2,5,1,7};  //传话筒
+
+	//is.erase(5);
+	//auto pos = is.begin();
+	auto pos = is.find(7);
+	//is.erase(pos);
+	is.erase(is.begin(), is.end());
+
+	auto it = is.begin();
+	while(it != is.end())
+	{
+		cout<<*it<<" ";
+		++it; //it++
+	}
+	cout<<endl;
+}
+
+/*
+void main()
+{
+	set<int> is = {4,8,9,0,2,5,1,7};
+	auto it = is.begin();
+	while(it != is.end())
+	{
+		cout<<*it<<" ";
+		++it; //it++
+	}
+	cout<<endl;
+
+	set<int>::iterator it1 = is.begin();
+	while(it1 != is.end())
+	{
+		cout<<*it1<<" ";
+		++it1; //it++
+	}
+	cout<<endl;
+
+	auto rit = is.rbegin();
+	while(rit != is.rend())
+	{
+		cout<<*rit<<" ";
+		++rit;
+	}
+	cout<<endl;
+}
+
+/*
+void main()
+{
+	int ar[] = {4,8,9,0,2,5,1,7};
+	int n = sizeof(ar)/sizeof(ar[0]);
+	set<int> is;
+	for(auto &e : is)
+		cout<<e<<" ";
+	cout<<endl;
+	set<int> is_1(ar, ar+n);
+	for(auto &e : is_1)
+		cout<<e<<" ";
+	cout<<endl;
+
+	vector<int> iv = {4,8,9,0,2,5,1,7};
+	set<int> is_2(iv.begin(), iv.end());
+	for(auto &e : is_2)
+		cout<<e<<" ";
+	cout<<endl;
+
+	set<int> is_3 = is_2; //拷贝构造函数
+	for(auto &e : is_3)
+		cout<<e<<" ";
+	cout<<endl;
+
+}
+
+/*
+//set 
+
+void main()
+{
+	set<int> is = {4,8,9,5,0,2,5,5,5,5,5,1,5,5,5,7};
+	for(auto &e : is)
+		cout<<e<<" ";
+	cout<<endl;
+
+	multiset<int> multi_is = {4,8,9,5,0,2,5,5,5,5,5,1,5,5,5,7};
+	for(auto &e : multi_is)
+		cout<<e<<" ";
+	cout<<endl;
+}
+
+/*
+void main()
+{
+	set<int, greater<int>> is = {4,8,9,0,2,5,1,7};
+	auto it = is.begin();
+	//*it = 100;
+	//it = is.erase(it);
+	//is.insert(100);
+	
+	//it = is.begin();
+
+	while(it != is.end())
+	{
+		cout<<*it<<" ";
+		++it;
+	}
+	cout<<endl;
+}
+
+/*
+void main()
+{
+	vector<int> iv = {4,8,9,0,2,5,1,7};
+	set<int> is;
+	for(int e : iv)
+		is.insert(e);
+	
+	//vector
+	for(int e : iv)
+		cout<<e<<" ";
+	cout<<endl;
+
+	for(auto &e : is)
+		cout<<e<<" ";
+	cout<<endl;
+}
+
+/*
+void main()
+{
+	//值对结构 key-second
+	pair<int, string> isv = {1,"abc"}; //int_string value
+	cout<<isv.first<<" : "<<isv.second<<endl;
+}
+*/
