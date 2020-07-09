@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test7_9_异常_智能指针", "Test7_9_异常_智能指针\Test7_9_异常_智能指针.vcxproj", "{1A13D46A-605D-4BF9-85C0-BD202A1D16FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A13D46A-605D-4BF9-85C0-BD202A1D16FE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1A13D46A-605D-4BF9-85C0-BD202A1D16FE}.Debug|Win32.Build.0 = Debug|Win32
+		{1A13D46A-605D-4BF9-85C0-BD202A1D16FE}.Release|Win32.ActiveCfg = Release|Win32
+		{1A13D46A-605D-4BF9-85C0-BD202A1D16FE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
