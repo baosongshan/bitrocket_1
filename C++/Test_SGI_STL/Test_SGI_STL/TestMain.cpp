@@ -3,15 +3,66 @@
 
 #include"stl_alloc.h"
 
-/*
-class my_list
-{};
-*/
 
+template<class _Ty>
+class list_node
+{
+public:
+	list_node(_Ty d = _Ty()):data(d),next(nullptr),prev(nullptr)
+	{}
+public:
+	_Ty  data;
+	list_node *next;
+	list_node *prev;
+};
+
+template<class _Ty, class Alloc=alloc>
+class my_list
+{
+public:
+	my_list():_Head(_Buynode()), _Size()
+	{}
+	void push_back(const _Ty &x)
+	{
+		list_node<_Ty> *_S = data_alloctor.allocate();
+		construct(&(_S->data),x);
+
+		_S->next = _Head;
+		_S->prev = _Head->prev;
+		_Head->prev->next = _S;
+		_Head->prev = _S;
+		_Size++;
+	}
+protected:
+	list_node<_Ty>* _Buynode(_Ty v = _Ty())
+	{
+		list_node<_Ty> *_S = data_alloctor.allocate();
+		construct(&(_S->data), v);
+		_S->next = _S->prev = _S;
+		return _S;
+	}
+private:
+	list_node<_Ty> *_Head;
+	size_t _Size;
+	simple_alloc<list_node<_Ty>, Alloc> data_alloctor; //空间配置器的对象
+};
+
+
+void main()
+{
+	my_list<int> lt;
+	lt.push_back(1);
+	lt.push_back(2);
+	lt.push_back(3);
+	lt.push_back(4);
+}
+
+/*
 void main()
 {
 	simple_alloc<int, alloc> sa;
 	int *p = sa.allocate();
+	sa.deallocate(p);
 }
 
 /*

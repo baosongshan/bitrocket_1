@@ -269,21 +269,32 @@ template<class T, class Alloc>
 class simple_alloc
 {
 public:
+	//动态开辟数组空间
 	static T* allocate(size_t n)
 	{
 		return 0==n ? 0 : (T*)Alloc::allocate(n * sizeof(T));
 	}
+	//动态开辟单个对象空间
 	static T* allocate()
 	{
 		return (T*)Alloc::allocate(sizeof(T));
 	}
+	//动态释放数组空间
 	static void deallocate(T *p, size_t n)
 	{
 		if(0 != n)
 			Alloc::deallocate(p, n*sizeof(T));
 	}
+	//动态释放单个空间
 	static void deallocate(T *p)
 	{
 		Alloc::deallocate(p, sizeof(T));
 	}
 };
+
+///////////////////////////////////////////////////////////////////////////
+template <class T1, class T2>
+void construct(T1* p, const T2& value)
+{
+	new (p)T1(value);   //定位new
+}
