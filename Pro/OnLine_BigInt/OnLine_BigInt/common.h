@@ -6,6 +6,7 @@
 #include<assert.h>
 #include<time.h>
 #include<windows.h>
+
 using namespace std;
 
 typedef unsigned char u_char;

@@ -1,16 +1,30 @@
+#include<vld.h>
 #include"bigint.h"
 
 void main()
 {
+	//BigInt bt, bt1(123), bt2(23);
 	BigInt bt, bt1, bt2;
 	bt1.LoadData(10);
+
 	cout<<"bt1 = "<<bt1<<endl;
 
 	Sleep(1000);
-	bt2.LoadData(10);
+	bt2.LoadData(2);
 	cout<<"bt2 = "<<bt2<<endl;
 
-	BigInt::Add(bt, bt1, bt2);
+	//BigInt::Add(bt, bt1, bt2);
+	//BigInt::Sub(bt, bt1, bt2);
+	//BigInt::Mul(bt, bt1, bt2);
+	//BigInt::Div(bt, bt1, bt2);
+
+	bt = bt1 + bt2;
+	bt = bt1 - bt2;
+	bt = bt1 * bt2;
+	bt = bt1 / bt2;
+	bt1 += bt2;
+
+
 	cout<<"bt  = "<<bt<<endl;
 }
 

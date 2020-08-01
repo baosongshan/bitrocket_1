@@ -11,7 +11,7 @@ public:
 	typedef const Type& const_reference;
 public:
 	SeqList(int sz = SEQLIST_DEFAULT_SIZE);
-	SeqList(const SeqList<Type> &bt);
+	SeqList(const SeqList<Type> &st);
 	SeqList& operator=(const SeqList<Type> &st);
 	~SeqList();
 public:
@@ -87,6 +87,34 @@ SeqList<Type>::SeqList(int sz)
 	base = new Type[capacity + 1]; //第一个空间暂时不存储任何数据
 	memset(base, 0, sizeof(Type)*(capacity+1));
 	len = 0;
+}
+
+template<class Type>
+SeqList<Type>::SeqList(const SeqList<Type> &st)
+{
+	capacity = st.capacity;
+	base = new Type[sizeof(Type)*(capacity+1)];
+	memset(base, 0, sizeof(Type)*(capacity+1));
+	memcpy(base, st.base, sizeof(Type)*(st.len+1));
+	len = st.len;
+}
+
+template<class Type>
+SeqList<Type>& SeqList<Type>::operator=(const SeqList<Type> &st)
+{
+	if(this != &st)
+	{
+		if(capacity < st.len)
+		{
+			Type *new_base = new Type[st.capacity+1];
+			delete []base;
+			base = new_base;
+			capacity = st.capacity;
+		}
+		memcpy(base, st.base, sizeof(Type)*(st.len+1));
+		len = st.len;
+	}
+	return *this;
 }
 
 template<class Type>
