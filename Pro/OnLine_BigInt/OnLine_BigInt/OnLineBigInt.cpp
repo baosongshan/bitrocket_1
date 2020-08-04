@@ -3,28 +3,59 @@
 
 void main()
 {
-	//BigInt bt, bt1(123), bt2(23);
+	BigInt bt; //BigInt bt(-123);
+	bt.LoadData(5);
+	cout<<"bt = "<<bt<<endl;
+	BigInt v = bt--;
+	cout<<"v = "<<v<<endl;
+	cout<<"bt = "<<bt<<endl;
+}
+
+/*
+void main()
+{
+	//BigInt bt, bt1(796), bt2(4);
 	BigInt bt, bt1, bt2;
-	bt1.LoadData(10);
+	bt1.LoadData(3);
 
 	cout<<"bt1 = "<<bt1<<endl;
 
 	Sleep(1000);
-	bt2.LoadData(2);
+	bt2.LoadData(6);
 	cout<<"bt2 = "<<bt2<<endl;
 
+	clock_t start = clock();
+	bt = bt1 + bt2;
+	clock_t end = clock();
+
+	cout<<"time:"<<(end-start)<<endl;
+	cout<<"bt  = "<<bt<<endl;
+}
+
+/*
+void main()
+{
+	//BigInt bt, bt1(796), bt2(4);
+	BigInt bt, bt1, bt2;
+	bt1.LoadData(3);
+
+	cout<<"bt1 = "<<bt1<<endl;
+
+	Sleep(1000);
+	bt2.LoadData(6);
+	cout<<"bt2 = "<<bt2<<endl;
+
+	clock_t start = clock();
 	//BigInt::Add(bt, bt1, bt2);
 	//BigInt::Sub(bt, bt1, bt2);
 	//BigInt::Mul(bt, bt1, bt2);
 	//BigInt::Div(bt, bt1, bt2);
+	//BigInt::Mod(bt, bt1, bt2);
+	//BigInt::Square(bt, bt1);
+	BigInt::Pow(bt, bt1, bt2);
+	clock_t end = clock();
 
-	bt = bt1 + bt2;
-	bt = bt1 - bt2;
-	bt = bt1 * bt2;
-	bt = bt1 / bt2;
-	bt1 += bt2;
-
-
+	cout<<"time:"<<(end-start)<<endl;
 	cout<<"bt  = "<<bt<<endl;
 }
 

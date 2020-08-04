@@ -1,0 +1,7 @@
+yum install httpd -y
+
+systemctl start httpd
+
+在 /var/www/html/ 增加网页页面
+
+修改配置文件： vim /etc/httpd/conf/httpd.conf

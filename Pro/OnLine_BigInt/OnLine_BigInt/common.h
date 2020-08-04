@@ -12,6 +12,9 @@ using namespace std;
 typedef unsigned char u_char;
 typedef unsigned long u_long;
 
+             // +          -
+typedef enum{POSITIVE, NEGATIVE} Symbol;
+
 #define ERR_EXIT(m)\
 	do\
 	{\

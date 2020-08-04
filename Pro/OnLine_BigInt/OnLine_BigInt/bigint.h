@@ -18,6 +18,7 @@ public:
 public:
 	u_char back()const;
 	void push_back(u_char x);
+	void push_front(u_char x);
 	void pop_back();
 	size_t size()const;
 	void clear();
@@ -31,8 +32,9 @@ public:
 	static void Mul(BigInt &bt, const BigInt &bt1, const BigInt &bt2);
 	static void Div(BigInt &bt, const BigInt &bt1, const BigInt &bt2);
 	static void Mod(BigInt &bt, const BigInt &bt1, const BigInt &bt2);
-	static void Square(BigInt &bt);
+	static void Square(BigInt &bt, const BigInt &bt1);
 	static void Pow(BigInt &bt, const BigInt &bt1, const BigInt &bt2); // bt = bt1^bt2
+	static void PowMod(BigInt &bt, const BigInt &bt1, const BigInt &bt2, const BigInt &bt3); //RSA bt = bt1^bt2 % bt3
 public:
 	static void clear_head_zero(BigInt &bt);
 public:
@@ -55,6 +57,11 @@ public:
 	BigInt& operator*=(const BigInt &bt);
 	BigInt& operator/=(const BigInt &bt);
 	BigInt& operator%=(const BigInt &bt);
+public:
+	BigInt operator>>(u_long i); // bt >> 5
+	BigInt operator<<(u_long i); 
+	BigInt& operator>>=(u_long i); 
+	BigInt& operator<<=(u_long i); 
 public:
 	bool operator<(const BigInt &bt)const;
 	bool operator>=(const BigInt &bt)const;

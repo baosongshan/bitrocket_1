@@ -35,6 +35,9 @@ public:
 public:
 	reference operator[](int pos);
 	const_reference operator[](int pos)const;
+public:
+	Symbol GetSymbol()const;
+	void SetSymbol(Symbol sym);
 protected:
 	bool _Inc();
 private:
@@ -47,6 +50,17 @@ private:
 
 //////////////////////////////////////////////////////////////////////////////////
 //顺序表的实现
+
+template<class Type>
+Symbol SeqList<Type>::GetSymbol()const
+{
+	return big[0];
+}
+template<class Type>
+void SeqList<Type>::SetSymbol(Symbol sym)
+{
+	big[0] = (Type)sym;
+}
 
 template<class Type>
 bool SeqList<Type>:: _Inc()
