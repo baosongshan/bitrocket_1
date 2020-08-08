@@ -1,14 +1,59 @@
 #include<vld.h>
 #include"bigint.h"
 
+typedef enum{ADD, SUB, MUL, DIV, MOD} OPER;
+
+void Data_Handler(BigInt &bt, BigInt &bt1, BigInt &bt2, OPER &op)
+{
+	bt.clear();
+	bt1.clear();
+	bt2.clear();
+
+	//m=41431&n=41431&cmd=1
+	//std::string data = getenv("QUREY_STRING");
+	std::string data = "m=41431&n=41431&cmd=1";
+
+	//解析bt1
+	int pos = data.find('=');
+	const char *p = data.c_str() + pos + 1;
+	while(*p>='0' && *p<='9')
+	{
+		bt1.push_front(*p-'0');
+		p++;
+	}
+
+	//解析bt2
+	pos = data.find('=', pos+1);
+	p = data.c_str() + pos + 1;
+	while(*p>='0' && *p<='9')
+	{
+		bt2.push_front(*p-'0');
+		p++;
+	}
+
+	//解析操作符
+	pos = data.find('=', pos+1);
+	p = data.c_str() + pos + 1;
+	if(*p == '1')
+		op = ADD;
+	if(*p == '2')
+		op = SUB;
+	if(*p == '3')
+		op = MUL;
+	if(*p == '4')
+		op = DIV;
+	
+}
+
+
 void main()
 {
-	BigInt bt; //BigInt bt(-123);
-	bt.LoadData(5);
-	cout<<"bt = "<<bt<<endl;
-	BigInt v = bt--;
-	cout<<"v = "<<v<<endl;
-	cout<<"bt = "<<bt<<endl;
+	BigInt bt, bt1, bt2;
+	OPER op;
+	Data_Handler(bt, bt1, bt2, op);
+	cout<<"bt1 = "<<bt1<<endl;
+	cout<<"bt2 = "<<bt2<<endl;
+	cout<<"cmd = "<<op<<endl;
 }
 
 /*
