@@ -2,19 +2,35 @@
 
 ostream& operator<<(ostream &out, const BigInt &bt)
 {
+	if(bt.GetSymbol() == NEGATIVE)
+		out<<"-";
 	for(u_long i=bt.size(); i>=1; --i)
 		out<<(int)bt[i];
 	return out;
 }
 
-BigInt::BigInt(u_long value) //123
+void BigInt::SetSymbol(Symbol sym)
+{
+	big.SetSymbol(sym);
+}
+Symbol BigInt::GetSymbol()const
+{
+	return big.GetSymbol();
+}
+
+BigInt::BigInt(long value) //123
 {
 	if(value == 0)
 		push_back(0);
+
+	if(value < 0)
+		SetSymbol(NEGATIVE);
+	value = abs(value);
+
 	while(value)
 	{
-		push_back(value % 10);
-		value /= 10;
+		push_back(value % 10);  // % 256  0~255
+		value /= 10;            // /= 256 
 	}
 }
 

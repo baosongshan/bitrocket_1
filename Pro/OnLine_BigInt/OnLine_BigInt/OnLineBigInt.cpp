@@ -1,6 +1,38 @@
 #include<vld.h>
 #include"bigint.h"
 
+int QuickPow(int a, int n)
+{
+	int base = a;
+	int res = 1;
+	while(n)
+	{
+		if(n & 1)
+			res *= base;
+		base *= base;
+		n>>=1;
+	}
+	return res;
+}
+
+void main()
+{
+	cout<<QuickPow(2, 1100)<<endl;
+}
+
+/*
+void main()
+{
+	//1 支持负数运算
+	BigInt bt(-123);
+	cout<<"bt = "<<bt<<endl;
+
+	//2 支持256进制存储 用于节省空间
+
+	//3
+}
+
+/*
 typedef enum{ADD, SUB, MUL, DIV, MOD} OPER;
 
 void Data_Handler(BigInt &bt, BigInt &bt1, BigInt &bt2, OPER &op)

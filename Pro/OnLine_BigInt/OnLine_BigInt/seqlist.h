@@ -54,12 +54,12 @@ private:
 template<class Type>
 Symbol SeqList<Type>::GetSymbol()const
 {
-	return big[0];
+	return (Symbol)base[0];
 }
 template<class Type>
 void SeqList<Type>::SetSymbol(Symbol sym)
 {
-	big[0] = (Type)sym;
+	base[0] = (Type)sym;
 }
 
 template<class Type>

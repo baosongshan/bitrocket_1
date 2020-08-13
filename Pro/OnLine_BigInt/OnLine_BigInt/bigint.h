@@ -11,10 +11,12 @@ class BigInt
 {
 	friend ostream& operator<<(ostream &out, const BigInt &bt);
 public:
-	BigInt(u_long value = 0);
+	BigInt(long value = 0);
 public:
 	void LoadData(int sz);
 	void ShowData()const;
+	void SetSymbol(Symbol sym);
+	Symbol GetSymbol()const;
 public:
 	u_char back()const;
 	void push_back(u_char x);
@@ -71,6 +73,8 @@ public:
 	bool operator!=(const BigInt &bt)const;
 private:
 	SeqList<u_char> big;
+
+	//vector<u_char> big;
 };
 
 #endif /* _BIGINT_H_ */
